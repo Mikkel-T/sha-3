@@ -7,7 +7,7 @@ const RHO_OFFSETS: [[u32; 5]; 5] = [
     [27, 20, 39, 8, 14],
 ];
 
-/// Round constants for the iota step mapping retrieved from [https://keccak.team/keccak_specs_summary.html](https://keccak.team/keccak_specs_summary.html).
+/// Round constants for the iota step mapping retrieved from [https://keccak.team/keccak_specs_summary.html](https://keccak.team/keccak_specs_summary.html). 
 const ROUND_CONSTANTS: [u64; 24] = [
     0x0000000000000001,
     0x0000000000008082,
@@ -35,7 +35,6 @@ const ROUND_CONSTANTS: [u64; 24] = [
     0x8000000080008008,
 ];
 
-#[derive(Clone)]
 pub struct State {
     state: [[u64; 5]; 5],
 }
@@ -97,6 +96,7 @@ impl State {
     }
 
     /// The theta step mapping as defined in section 3.2.1 of FIPS 202.
+    #[allow(clippy::needless_range_loop)]
     fn theta(&mut self) {
         let mut c = [0; 5];
 
@@ -123,6 +123,7 @@ impl State {
     }
 
     /// The rho step mapping as defined in section 3.2.2 of FIPS 202, but with the offsets precalculated.
+    #[allow(clippy::needless_range_loop)]
     fn rho(&mut self) {
         for x in 0..5 {
             for y in 0..5 {
@@ -134,7 +135,7 @@ impl State {
     /// The pi step mapping as defined in section 3.2.3 of FIPS 202.
     fn pi(&mut self) {
         // Use a tmp state as to not mess with the current state while working on it.
-        let tmp = self.state.clone();
+        let tmp = self.state;
 
         for x in 0..5 {
             for y in 0..5 {
@@ -145,7 +146,7 @@ impl State {
 
     /// The chi step mapping as defined in section 3.2.4 of FIPS 202.
     fn chi(&mut self) {
-        let tmp = self.state.clone();
+        let tmp = self.state;
 
         for x in 0..5 {
             for y in 0..5 {
