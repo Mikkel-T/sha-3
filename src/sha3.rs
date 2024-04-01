@@ -1,6 +1,7 @@
 use crate::input::Input;
 use crate::utils::keccak;
 
+/// The SHA-3 algorithm. Here, the size is the final length of the output in bits (has to be one of the standard sizes 224, 256, 384 or 512) and the input can be of any type that implements the Input trait.
 pub fn sha3<T: Input>(size: usize, input: T) -> String {
     match size {
         224 | 256 | 384 | 512 => (),
@@ -12,18 +13,22 @@ pub fn sha3<T: Input>(size: usize, input: T) -> String {
     keccak(size * 2, size, m)
 }
 
+/// Shortcut for the SHA3-224 function, the input can be of any type that implements the Input trait.
 pub fn sha3_224<T: Input>(input: T) -> String {
     sha3(224, input)
 }
 
+/// Shortcut for the SHA3-256 function, the input can be of any type that implements the Input trait.
 pub fn sha3_256<T: Input>(input: T) -> String {
     sha3(256, input)
 }
 
+/// Shortcut for the SHA3-384 function, the input can be of any type that implements the Input trait.
 pub fn sha3_384<T: Input>(input: T) -> String {
     sha3(384, input)
 }
 
+/// Shortcut for the SHA3-512 function, the input can be of any type that implements the Input trait.
 pub fn sha3_512<T: Input>(input: T) -> String {
     sha3(512, input)
 }

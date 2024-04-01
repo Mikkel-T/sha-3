@@ -1,4 +1,6 @@
+/// The trait implemented to handle input for the hashing algorithms.
 pub trait Input {
+    /// Convert a type to the wanted input form.
     fn convert(&self) -> &[u8];
 }
 

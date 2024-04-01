@@ -1,6 +1,7 @@
 use crate::input::Input;
 use crate::utils::keccak;
 
+/// The SHAKE function. Here, the capacity is the number used to decide block length and more (has to be one of the standard sizes 128 or 256). The size is the final length of the output in bits (has to be a number divisible by 8) and the input can be of any type that implements the Input trait.
 pub fn shake<T: Input>(capacity: usize, input: T, size: usize) -> String {
     match capacity {
         128 | 256 => (),
@@ -16,10 +17,12 @@ pub fn shake<T: Input>(capacity: usize, input: T, size: usize) -> String {
     keccak(capacity * 2, size, m)
 }
 
+/// Shortcut for the SHAKE128 function, the input can be of any type that implements the Input trait and the size is the final length of the output in bits (has to be a number divisible by 8).
 pub fn shake128<T: Input>(input: T, size: usize) -> String {
     shake(128, input, size)
 }
 
+/// Shortcut for the SHAKE256 function, the input can be of any type that implements the Input trait and the size is the final length of the output in bits (has to be a number divisible by 8).
 pub fn shake256<T: Input>(input: T, size: usize) -> String {
     shake(256, input, size)
 }
