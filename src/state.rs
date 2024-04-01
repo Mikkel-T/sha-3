@@ -7,7 +7,7 @@ const RHO_OFFSETS: [[u32; 5]; 5] = [
     [27, 20, 39, 8, 14],
 ];
 
-/// Round constants for the iota step mapping retrieved from [https://keccak.team/keccak_specs_summary.html](https://keccak.team/keccak_specs_summary.html). 
+/// Round constants for the iota step mapping retrieved from [https://keccak.team/keccak_specs_summary.html](https://keccak.team/keccak_specs_summary.html).
 const ROUND_CONSTANTS: [u64; 24] = [
     0x0000000000000001,
     0x0000000000008082,

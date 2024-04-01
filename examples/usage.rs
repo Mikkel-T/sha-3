@@ -1,5 +1,10 @@
-use sha3::sha3_512;
+use sha3::{sha3_224, sha3_256, sha3_384, sha3_512, shake128, shake256};
 
 fn main() {
-    println!("{}", sha3_512("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
+    println!("{}", sha3_224(""));
+    println!("{}", sha3_256(""));
+    println!("{}", sha3_384(""));
+    println!("{}", sha3_512(""));
+    println!("{}", shake128("", 256));
+    println!("{}", shake256("", 512));
 }
