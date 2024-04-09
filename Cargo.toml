@@ -1,10 +1,5 @@
-[package]
-name = "sha3"
-version = "0.1.0"
-edition = "2021"
-license = "MIT"
-authors = ["Mikkel-T <mikkel@mikkel-t.com>"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace]
+members = [
+  "sha3",
+]
+resolver = "2"
