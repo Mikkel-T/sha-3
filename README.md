@@ -12,7 +12,7 @@ An example of the usage of the SHA-3 and SHAKE functions can be found in the "sh
 cargo run --example main
 ```
 
-To run the unit tests for the "sha3" crate, use the following command:
+To run the unit tests, use the following command:
 
 ```bash
 cargo test
