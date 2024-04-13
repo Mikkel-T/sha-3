@@ -48,3 +48,34 @@ fn bytes_to_hex(bytes: Vec<u8>) -> String {
 
     s
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_pad10star1() {
+        let m = vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]; // [0, 1, 2, 3, 4, 5]
+        let block_size = 16;
+        let expected_output = vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x00,0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x00, 0x00, 0x80];
+        assert_eq!(pad10star1(m, block_size), expected_output);
+    }
+
+    #[test]
+    fn test_bytes_to_hex() {
+        // Test case 1
+        let bytes = vec![0x61, 0x62, 0x63]; // "abc"
+        let expected_output = "616263";
+        assert_eq!(bytes_to_hex(bytes), expected_output);
+
+        // Test case 2
+        let bytes = vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]; // [0, 1, 2, 3, 4, 5]
+        let expected_output = "000102030405";
+        assert_eq!(bytes_to_hex(bytes), expected_output);
+
+        // Test case 3
+        let bytes = vec![0xff, 0xff, 0xff, 0xff]; // [255, 255, 255, 255]
+        let expected_output = "ffffffff";
+        assert_eq!(bytes_to_hex(bytes), expected_output);
+    }
+}

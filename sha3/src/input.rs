@@ -33,3 +33,43 @@ impl Input for &String {
         self.as_bytes()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_str_input() {
+        let input: &str = "Hello, world!";
+        let converted = input.convert();
+        assert_eq!(converted, input.as_bytes());
+    }
+
+    #[test]
+    fn test_string_input() {
+        let input: String = String::from("Hello, world!");
+        let converted = input.convert();
+        assert_eq!(converted, input.as_bytes());
+    }
+
+    #[test]
+    fn test_slice_input() {
+        let input: &[u8] = &[1, 2, 3, 4, 5];
+        let converted = input.convert();
+        assert_eq!(converted, input);
+    }
+
+    #[test]
+    fn test_vec_input() {
+        let input: Vec<u8> = vec![1, 2, 3, 4, 5];
+        let converted = input.convert();
+        assert_eq!(converted, input.as_slice());
+    }
+
+    #[test]
+    fn test_string_ref_input() {
+        let input: &String = &String::from("Hello, world!");
+        let converted = input.convert();
+        assert_eq!(converted, input.as_bytes());
+    }
+}
