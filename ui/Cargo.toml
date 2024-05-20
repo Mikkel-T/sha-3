@@ -1,0 +1,11 @@
+[package]
+name = "ui"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Mikkel-T <mikkel@mikkel-t.com>"]
+
+[dependencies]
+sha3 = { path = "../sha3" }
+floem = { git = "https://github.com/lapce/floem", rev = "e241c5cfd282e4df1c85f9cbe027baf96c537a1b", features = ["rfd-async-std"]}
+arboard = "3.3.0"

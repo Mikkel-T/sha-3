@@ -1,5 +1,5 @@
 [workspace]
 members = [
-  "sha3",
+  "sha3", "ui",
 ]
 resolver = "2"
