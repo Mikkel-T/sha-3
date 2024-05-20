@@ -147,7 +147,7 @@ fn app_view() -> impl View {
 
     v_stack((
         text("SHA-3").style(|s| s.font_size(35.).font_weight(Weight::BOLD)),
-        text("Vælg algoritme"),
+        text("Vælg algoritme").style(|s| s.font_weight(Weight::SEMIBOLD)),
         h_stack((
             button(|| "SHA-3")
                 .on_click_stop(move |_| algorithm.set(Algorithm::SHA3(SHA3Variant::SHA3_256))),
@@ -155,7 +155,7 @@ fn app_view() -> impl View {
                 .on_click_stop(move |_| algorithm.set(Algorithm::SHAKE(SHAKEVariant::SHAKE256))),
         ))
         .style(|s| s.gap(10., 0.)),
-        text("Vælg outputlængde"),
+        text("Vælg kapacitet").style(|s| s.font_weight(Weight::SEMIBOLD)),
         dyn_container(move || match algorithm.get() {
             Algorithm::SHA3(_) => h_stack((
                 button(|| "224")
@@ -180,15 +180,16 @@ fn app_view() -> impl View {
                     }),
                 ))
                 .style(|s| s.gap(10., 0.)),
+                text("Vælg outputlængde").style(|s| s.font_weight(Weight::SEMIBOLD)),
                 text_input(size_str)
                     .keyboard_navigatable()
                     .placeholder("Outputlængde"),
             ))
-            .style(|s| s.gap(10., 0.).items_center().justify_center())
+            .style(|s| s.gap(0., 10.).items_center().justify_center())
             .into_any(),
         }),
         label(move || format!("Algoritme: {}", algorithm_to_string(algorithm.get()))),
-        text("Vælg inputmetode"),
+        text("Vælg inputmetode").style(|s| s.font_weight(Weight::SEMIBOLD)),
         h_stack((
             button(|| "Tekst").on_click_stop(move |_| set_current.set(InputMethod::Text)),
             button(|| "Fil").on_click_stop(move |_| {
@@ -224,7 +225,7 @@ fn app_view() -> impl View {
             .justify_center()
             .width_full()
             .height_full()
-            .gap(0., 15.)
+            .gap(0., 10.)
             .padding(30.)
             .font_size(16.)
     })
