@@ -7,7 +7,7 @@ use floem::{
     file::FileDialogOptions,
     kurbo::Size,
     peniko::Color,
-    reactive::{create_effect, create_rw_signal, create_signal, RwSignal},
+    reactive::{create_effect, create_rw_signal, RwSignal},
     views::{button, dyn_container, empty, h_stack, label, text, text_input, v_stack, Decorators},
     window::WindowConfig,
     Application, IntoView, View,
@@ -99,6 +99,15 @@ fn file_user_input(
     size: RwSignal<usize>,
 ) -> impl IntoView {
     let selected_file = create_rw_signal(String::new());
+    let file_contents = create_rw_signal(Vec::new());
+
+    create_effect(move |_| {
+        input_hash.set(run_algorithm(
+            algorithm.get(),
+            file_contents.get(),
+            size.get(),
+        ));
+    });
 
     v_stack((h_stack((
         button(|| "Vælg fil").on_click_cont(move |_| {
@@ -107,15 +116,8 @@ fn file_user_input(
                 move |file_info| {
                     if let Some(file) = file_info {
                         selected_file.set(file.path[0].clone().to_string_lossy().to_string());
-                        match fs::read(file.path[0].clone()) {
-                            Ok(contents) => {
-                                input_hash.set(run_algorithm(
-                                    algorithm.get(),
-                                    contents,
-                                    size.get(),
-                                ));
-                            }
-                            Err(_) => {}
+                        if let Ok(contents) = fs::read(file.path[0].clone()) {
+                            file_contents.set(contents)
                         }
                     }
                 },
@@ -138,7 +140,7 @@ fn app_view() -> impl View {
     let algorithm = create_rw_signal(Algorithm::SHA3(SHA3Variant::SHA3_256));
     let size = create_rw_signal(256);
     let size_str = create_rw_signal("256".to_string());
-    let (current, set_current) = create_signal(InputMethod::Text);
+    let current = create_rw_signal(InputMethod::Text);
 
     create_effect(move |_| {
         let tmp = size_str.get().parse().unwrap_or(256);
@@ -191,9 +193,9 @@ fn app_view() -> impl View {
         label(move || format!("Algoritme: {}", algorithm_to_string(algorithm.get()))),
         text("Vælg inputmetode").style(|s| s.font_weight(Weight::SEMIBOLD)),
         h_stack((
-            button(|| "Tekst").on_click_stop(move |_| set_current.set(InputMethod::Text)),
+            button(|| "Tekst").on_click_stop(move |_| current.set(InputMethod::Text)),
             button(|| "Fil").on_click_stop(move |_| {
-                set_current.set(InputMethod::File);
+                current.set(InputMethod::File);
                 input_hash.set(run_algorithm(algorithm.get(), "", size.get()));
             }),
         ))
